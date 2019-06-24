@@ -1,5 +1,6 @@
-package com.example.projetobank.model;
+package com.example.projetobank.login;
 
+import com.example.projetobank.model.User;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
@@ -9,13 +10,12 @@ public class LoginResponse {
     @SerializedName("message")
     private String message;
 
-    private Login login;
+    private User user;
 
-
-    public LoginResponse(int code, String message, Login login) {
+    public LoginResponse(int code, String message, User user) {
         this.code = code;
         this.message = message;
-        this.login = login;
+        this.user = user;
     }
 
     public int getCode() {
@@ -26,7 +26,7 @@ public class LoginResponse {
         return message;
     }
 
-    public Login getLogin(){ return  login;}
+    public User getUser(){ return  user;}
 
 
 }

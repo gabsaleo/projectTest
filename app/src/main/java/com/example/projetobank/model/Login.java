@@ -2,8 +2,6 @@ package com.example.projetobank.model;
 
 import android.content.Context;
 
-import com.example.projetobank.ui.IMainBank;
-
 public class Login {
 
     private String user;

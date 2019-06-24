@@ -21,7 +21,9 @@ public class RetrofitClient {
         return mInstance;
     }
 
-   public Api getApiServices(){return retrofit.create(Api.class);}
+   public <S> S createService (Class <S> serviceClass){
+        return retrofit.create(serviceClass);
+   }
 
 
 }
