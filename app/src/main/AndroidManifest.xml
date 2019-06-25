@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".lista.StatementsActivity"></activity>
+        <activity android:name=".ui.Second"></activity>
     </application>
 
 </manifest>

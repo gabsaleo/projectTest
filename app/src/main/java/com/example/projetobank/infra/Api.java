@@ -1,6 +1,5 @@
 package com.example.projetobank.infra;
 
-import com.example.projetobank.lista.StatementsResponse;
 import com.example.projetobank.login.LoginResponse;
 
 import retrofit2.Call;
@@ -19,6 +18,4 @@ public interface Api {
             @Field("password") String password
     );
 
-    @GET("statements/{id}")
-    Call<StatementsResponse> getStatementList(@Path("id") long id );
 }

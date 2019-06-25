@@ -3,7 +3,9 @@ package com.example.projetobank.model;
 import com.example.projetobank.login.LoginResponse;
 import com.example.projetobank.ui.BaseCallback;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     public UserContract.IUserRepository repository;
 

@@ -3,8 +3,6 @@ package com.example.projetobank;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.projetobank.model.Login;
-
 public class SharedPrefManager {
 
     private SharedPreferences sharedPreferences;

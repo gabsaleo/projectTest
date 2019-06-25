@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.projetobank.SharedPrefManager;
 import com.example.projetobank.R;
-import com.example.projetobank.lista.StatementsActivity;
 import com.example.projetobank.model.User;
 import com.example.projetobank.ui.Second;
 
@@ -21,10 +20,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private Button botao;
     Context context;
     private EditText login, password;
-    private  SharedPrefManager sharedPrefManager;
+    private SharedPrefManager sharedPrefManager;
 
     public LoginContract.Presenter presenter;
-
+    private LoginResponse loginResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         verifyLogin();
         presenter = new LoginPresenter(this);
 
-
         //userSign();
 
         botao.setOnClickListener(new View.OnClickListener() {
@@ -51,18 +49,34 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void navigateToList(User user) {
-        Intent intent = new Intent(this, StatementsActivity.class);
+
+        Intent intent = new Intent(LoginActivity.this, Second.class);
+        Bundle b = new Bundle();
+        b.putLong("id", user.getUserId());
+        b.putString("name", user.getName());
+        b.putString("Agency", user.getAgency());
+        b.putString("bankAccount", user.getBankAccount());
+        b.putFloat("Balance", user.getBalance());
+        intent.putExtras(b);
         startActivity(intent);
+        saveLogin(user.getName());
+
     }
 
-    public Context getContext(){return this;}
-    public Context getActivity(){return this;}
+    public Context getContext() {
+        return this;
+    }
 
-    public void saveLogin (String user) {
+    public Context getActivity() {
+        return this;
+    }
+
+    public void saveLogin(String user) {
         sharedPrefManager.saveLogin(login.getText().toString());
         Toast.makeText(this, "salvo", Toast.LENGTH_SHORT).show();
     }
-    public void verifyLogin () {
+
+    public void verifyLogin() {
         if (sharedPrefManager.getItsSave() == 1) {
             login.setText(sharedPrefManager.getUser());
         }

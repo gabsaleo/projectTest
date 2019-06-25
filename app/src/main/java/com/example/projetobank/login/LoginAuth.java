@@ -1,4 +1,4 @@
-package com.example.projetobank;
+package com.example.projetobank.login;
 
 import com.example.projetobank.infra.Api;
 import com.example.projetobank.infra.RetrofitClient;
@@ -24,7 +24,8 @@ public class LoginAuth implements UserContract.IUserRepository {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful() && response.body() != null){
-                   onResult.onSuccessful(response.body());
+                    LoginResponse loginResponse = response.body();
+                   onResult.onSuccessful(loginResponse);
                 }
             }
 

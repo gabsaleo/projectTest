@@ -2,7 +2,6 @@ package com.example.projetobank.login;
 
 import android.widget.Toast;
 
-import com.example.projetobank.LoginAuth;
 import com.example.projetobank.model.User;
 import com.example.projetobank.ui.BaseCallback;
 
