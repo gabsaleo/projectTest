@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.projetobank.R;
 import com.example.projetobank.infra.IStatementsServices;
 import com.example.projetobank.infra.RetrofitClient;
+import com.example.projetobank.model.User;
 import com.example.projetobank.statements.Adapter;
 import com.example.projetobank.statements.Statement;
 import com.example.projetobank.statements.StatementResponse;
@@ -45,16 +46,18 @@ public class Second extends AppCompatActivity {
 
 
 
-        Bundle b = getIntent().getExtras();
-        if(b!= null){
-            nameUser.setText(b.getString("name"));
-            nameBankAccount.setText(b.getString("bankAccount" + "/" + "Agency"));
+
+        if(getIntent().hasExtra("user")){
+            User user = (User) getIntent().getSerializableExtra("user");
+
+            nameUser.setText(user.getName());
+            nameBankAccount.setText(user.getBankAccount() + " / " + user.getAgency());
 
             Locale locale = new Locale("pt", "BR");
             NumberFormat format = NumberFormat.getCurrencyInstance(locale);
-            String currency = format.format(b.getFloat("Balance"));
+            String currency = format.format(user.getBalance());
             nameBalance.setText(currency);
-            getStatements(b.getLong("id"));
+            getStatements(user.getUserId());
 
 
         }

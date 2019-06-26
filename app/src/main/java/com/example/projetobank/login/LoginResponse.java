@@ -5,28 +5,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
 
-    @SerializedName("code")
-    private int code;
-    @SerializedName("message")
-    private String message;
+    private Error error;
 
+    @SerializedName("userAccount")
     private User user;
 
-    public LoginResponse(int code, String message, User user) {
-        this.code = code;
-        this.message = message;
+    public LoginResponse(Error error, User user) {
+        this.error = error;
         this.user = user;
     }
 
-    public int getCode() {
-        return code;
+    public Error getError() {
+        return error;
     }
 
-    public String getMessage() {
-        return message;
+    public User getUser() {
+        return user;
     }
-
-    public User getUser(){ return  user;}
-
-
 }

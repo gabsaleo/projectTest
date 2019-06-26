@@ -21,7 +21,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             user.login(new BaseCallback<LoginResponse>() {
                 @Override
                 public void onSuccessful(LoginResponse value) {
-                    view.navigateToList(user);
+                    view.navigateToList(value.getUser());
                 }
 
                 @Override
