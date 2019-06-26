@@ -51,7 +51,8 @@ public class Second extends AppCompatActivity {
             User user = (User) getIntent().getSerializableExtra("user");
 
             nameUser.setText(user.getName());
-            nameBankAccount.setText(user.getBankAccount() + " / " + user.getAgency());
+            nameBankAccount.setText(user.getBankAccount() + " / " + user.getAgency()
+                    .replaceAll("([0-9]{2})([0-9]{6})([0-9])", "$1.$2-$3"));
 
             Locale locale = new Locale("pt", "BR");
             NumberFormat format = NumberFormat.getCurrencyInstance(locale);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,11 +29,17 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     public LoginContract.Presenter presenter;
     private LoginResponse loginResponse;
-    private static final String EMAIL_PATTERN =
-            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
-    private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +         //pelo menos 1 digito
+                  //  "(?=.*[a-z])" +         //pelo menos 1 letra minuscula
+                   // "(?=.*[A-Z])" +         //pelo menos 1 letra maiuscula
+                    "(?=.*[a-zA-Z])" +      //qualquer letra
+                    "(?=.*[@#$%^&+=])" +    //pelo menos 1 caracter especial
+                    "(?=\\S+$)" +           //sem espaços em branco
+                    ".{4,}" +               //pelo menos 4 caracteres
+                    "$");
+private static final Pattern CPF_PATTERN = Pattern.compile("^" +"(?=.*[0-9])" + ".{11}" + "$");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,32 +47,71 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         setContentView(R.layout.activity_main);
         sharedPrefManager = new SharedPrefManager(this);
 
-
-
-
-
         login = findViewById(R.id.test_user);
         password = findViewById(R.id.password);
         botao = findViewById(R.id.buttonSignUp);
         verifyLogin();
         presenter = new LoginPresenter(this);
 
+        validateEmail(login.getText().toString());
+        validatePassword(password.getText().toString());
+
         //userSign();
 
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.login(login.getText().toString().trim(), password.getText().toString().trim());
+                if(validateEmail(login.getText().toString()) == true
+                && validatePassword(password.getText().toString()) == true){
+                    presenter.login(login.getText().toString(), password.getText().toString());
+                }
+
             }
         });
 
-        validarEmail(login.getText().toString());
     }
+    private boolean validateEmail(String user) {
+        String email = login.getText().toString();
+        if (email.isEmpty()) {
+            login.setError("Login não pode ser nulo");
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            login.setError("Insira um email válido");
+            return false;
+        } else {
+            login.setError(null);
+            return true;
+        }
+    }
+    private boolean validatePassword(String senha1){
+        String senha = password.getText().toString();
+        if(senha.isEmpty()){
+            password.setError("Senha não pode ser nula");
+            return false;
+        } else if(!PASSWORD_PATTERN.matcher(senha).matches()){
+            password.setError("A senha deve ter o minino de 4 caracteres, 1 caracter especial, " +
+                    "1 caracter maiusculo e 1 numero");
+            return false;
+        } else{
+            password.setError(null);
+            return true;
+        }
+    }
+//    private boolean validateCPF(int user){
+//        int cpf = Integer.parseInt(login.getText().toString());
+//        if(cpf == 0){
+//            login.setError("CPF não pode ser nulo");
+//            return false;
+//        } else if(!CPF_PATTERN.matcher(String.valueOf(cpf)).matches()){
+//            login.setError("CPF deve ter 11 digitos");
+//            return false;
+//        }else{
+//            login.setError(null);
+//            return true;
+//        }
+//    }
 
-    public static boolean validarEmail(String login){
-        Matcher matcher  = pattern.matcher(login);
-        return matcher.matches();
-    }
+
 
     @Override
     public void navigateToList(User user) {
