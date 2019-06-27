@@ -1,7 +1,7 @@
 package com.example.projetobank.model;
 
 import com.example.projetobank.login.LoginResponse;
-import com.example.projetobank.ui.BaseCallback;
+import com.example.projetobank.infra.BaseCallback;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.example.projetobank.ui;
+package com.example.projetobank.infra;
 
 
 public interface BaseCallback<T> {

@@ -1,4 +1,4 @@
-package com.example.projetobank.statements;
+package com.example.projetobank.statements.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,18 +8,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.projetobank.R;
+import com.example.projetobank.statements.Statement;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class AdapterStatements extends RecyclerView.Adapter<AdapterStatements.ViewHolder> {
     List<Statement> list;
 
-    public Adapter( List<Statement> list) {
+    public AdapterStatements(List<Statement> list) {
         this.list = list;
     }
 
@@ -51,7 +51,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
+        if(list != null)
         return list.size();
+        else return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

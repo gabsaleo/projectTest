@@ -2,9 +2,8 @@ package com.example.projetobank.login;
 
 import com.example.projetobank.infra.Api;
 import com.example.projetobank.infra.RetrofitClient;
-import com.example.projetobank.login.LoginResponse;
 import com.example.projetobank.model.UserContract;
-import com.example.projetobank.ui.BaseCallback;
+import com.example.projetobank.infra.BaseCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;

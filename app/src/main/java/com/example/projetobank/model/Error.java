@@ -1,4 +1,4 @@
-package com.example.projetobank.infra;
+package com.example.projetobank.model;
 
 import com.google.gson.annotations.SerializedName;
 

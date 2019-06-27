@@ -12,9 +12,6 @@ import retrofit2.http.Path;
 public interface IStatementsServices {
 
 
-    @GET("statements/{id}")
-    Call<StatementResponse> getStatementList(@Path("id") long id);
-
 
 
 }

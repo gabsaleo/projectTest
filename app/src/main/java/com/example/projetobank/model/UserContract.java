@@ -1,7 +1,7 @@
 package com.example.projetobank.model;
 
 import com.example.projetobank.login.LoginResponse;
-import com.example.projetobank.ui.BaseCallback;
+import com.example.projetobank.infra.BaseCallback;
 
 public class UserContract {
     public interface IUserRepository{

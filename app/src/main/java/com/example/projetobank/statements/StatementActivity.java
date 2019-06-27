@@ -1,5 +1,6 @@
-package com.example.projetobank.ui;
+package com.example.projetobank.statements;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,17 +10,14 @@ import android.widget.TextView;
 
 import com.example.projetobank.R;
 import com.example.projetobank.infra.Api;
-import com.example.projetobank.infra.IStatementsServices;
 import com.example.projetobank.infra.RetrofitClient;
 import com.example.projetobank.model.User;
-import com.example.projetobank.statements.Adapter;
+import com.example.projetobank.statements.adapter.AdapterStatements;
 import com.example.projetobank.statements.Statement;
 import com.example.projetobank.statements.StatementResponse;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,11 +25,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Second extends AppCompatActivity {
+public class StatementActivity extends AppCompatActivity implements StatementContract.View {
 
     private RecyclerView recyclerView;
     private List<Statement> statements;
-    private Adapter adapter;
+    private AdapterStatements adapter;
+
+    private StatementContract.Presenter presenter;
 
     TextView nameUser, nameSaldo, nameBalance, nameCount, nameBankAccount;
 
@@ -44,6 +44,8 @@ public class Second extends AppCompatActivity {
         nameBalance = findViewById(R.id.nameBalance);
         nameCount = findViewById(R.id.nameCount);
         nameBankAccount = findViewById(R.id.nameBankAccount);
+
+        presenter = new StatementPresenter(this);
 
 
 
@@ -59,47 +61,30 @@ public class Second extends AppCompatActivity {
             NumberFormat format = NumberFormat.getCurrencyInstance(locale);
             String currency = format.format(user.getBalance());
             nameBalance.setText(currency);
-            getStatements(user.getUserId());
+            presenter.getStatement(user.getUserId());
 
 
         }
 
     }
     public void configAdapter(List<Statement> statementList){
-        adapter = new Adapter((ArrayList<Statement>) statements);
-        recyclerView = findViewById(R.id.recyclerView);
+        adapter = new AdapterStatements( statementList);
+        recyclerView = findViewById(R.id.recyclerViewStatements);
        recyclerView.setHasFixedSize(true);
        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
 
-    public void getStatements(long id){
-        Call<StatementResponse> call = RetrofitClient.getInstance()
-                .createService(Api.class).getStatementList(id);
-
-
-        call.enqueue(new Callback<StatementResponse>() {
-            @Override
-            public void onResponse(Call<StatementResponse> call, Response<StatementResponse> response) {
-                StatementResponse statementResponse = response.body();
-                statements = new ArrayList<Statement>(statementResponse.getStatementList());
-                configAdapter(statementResponse.getStatementList());
-
-            }
-
-            @Override
-            public void onFailure(Call<StatementResponse> call, Throwable t) {
-                Log.d("Error", t.getMessage());
-            }
-        });
 
 
 
+    @Override
+    public Context getActivity() { return this; }
 
+    @Override
+    public void showList(List<Statement> statementList) {
+        configAdapter(statementList);
     }
-
-
-
-    }
+}
 

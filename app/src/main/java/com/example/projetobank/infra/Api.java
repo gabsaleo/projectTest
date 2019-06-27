@@ -1,6 +1,7 @@
 package com.example.projetobank.infra;
 
 import com.example.projetobank.login.LoginResponse;
+import com.example.projetobank.statements.StatementResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -17,5 +18,9 @@ public interface Api {
             @Field("user") String user,
             @Field("password") String password
     );
+
+    @GET("statements/{id}")
+    Call<StatementResponse> getStatementList(@Path("id") long id);
+
 
 }

@@ -7,26 +7,18 @@ import java.util.List;
 
 public class StatementResponse {
 
-    @SerializedName("code")
-    private int code;
-
-    @SerializedName("message")
-    private String message;
-
     private List<Statement> statementList;
 
-    public StatementResponse(int code, String message, List<Statement> statementList) {
-        this.code = code;
-        this.message = message;
+    private Error error;
+
+    public StatementResponse(Error error, List<Statement> statementList) {
+       this.error = error;
         this.statementList = statementList;
     }
 
-    public int getCode() {
-        return code;
-    }
 
-    public String getMessage() {
-        return message;
+    public Error getError() {
+        return error;
     }
 
     public List<Statement> getStatementList() {
