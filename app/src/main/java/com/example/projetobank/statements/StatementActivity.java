@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.projetobank.R;
+import com.example.projetobank.infra.Api;
 import com.example.projetobank.infra.IStatementsServices;
 import com.example.projetobank.infra.RetrofitClient;
 import com.example.projetobank.model.User;
@@ -72,9 +73,12 @@ public class Second extends AppCompatActivity {
        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
+
     public void getStatements(long id){
         Call<StatementResponse> call = RetrofitClient.getInstance()
-                .createService(IStatementsServices.class).getStatementList(id);
+                .createService(Api.class).getStatementList(id);
+
+
         call.enqueue(new Callback<StatementResponse>() {
             @Override
             public void onResponse(Call<StatementResponse> call, Response<StatementResponse> response) {
