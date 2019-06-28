@@ -64,7 +64,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         }
 
-        return false;
+        return true;
     }
 
     @Override
